@@ -68,7 +68,8 @@ public class RoomService implements RoomFacade {
             }
         }
 
-        addToRoomSlots(roomName, foundRoom.getSlots());
+        addToRoomSlots(roomName, foundRoom.getSlots()); // TODO: przesunąć to do momentu faktycznego dołączenia do pokoju
+        // TODO: dodać usuwanie zajętych slotów po wyjściu z pokoju
 
         LOGGER.info("User {} can join to room {}", dto.getNickname(), roomName);
     }
@@ -122,6 +123,5 @@ public class RoomService implements RoomFacade {
         } else {
             throw new RoomNotFoundException();
         }
-
     }
 }

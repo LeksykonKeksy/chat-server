@@ -14,6 +14,8 @@ import pl.leksy.krzysztof.chat.server.web.controller.RoomController;
 @ControllerAdvice(assignableTypes = RoomController.class)
 public class RoomExceptionHandler extends ResponseEntityExceptionHandler {
 
+    // TODO: resolve 'java.lang.IllegalArgumentException: Unknown return value type: org.springframework.http.HttpStatus'
+
     @ExceptionHandler(RoomNotFoundException.class)
     public HttpStatus handleRoomNotFoundException(Throwable e) {
         LOGGER.error("Room not found");
