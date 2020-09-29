@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import pl.leksy.krzysztof.chat.server.room.service.RoomFacade;
-import pl.leksy.krzysztof.chat.server.web.dto.CreateRoomRequestDto;
-import pl.leksy.krzysztof.chat.server.web.dto.CreateRoomResponseDto;
-import pl.leksy.krzysztof.chat.server.web.dto.JoinRoomRequestDto;
-import pl.leksy.krzysztof.chat.server.web.dto.RoomListDto;
+import pl.leksy.krzysztof.chat.server.web.dto.*;
 
 import javax.validation.Valid;
 
@@ -46,5 +43,12 @@ public class RoomController {
         LOGGER.info("Getting public room list");
 
         return roomFacade.getPublicRooms();
+    }
+
+    @PostMapping("/disconnect")
+    public HttpStatus disconnectFromRoom(@RequestBody DisconnectFromRoomRequestDto dto) {
+        LOGGER.info("Disconnectng one user from room {}", dto.getRoomName());
+        roomFacade.disconnectFromRoom(dto.getRoomName());
+        return HttpStatus.OK;
     }
 }

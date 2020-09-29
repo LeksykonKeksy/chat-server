@@ -10,4 +10,6 @@ public interface RoomFacade {
     void joinRoom(JoinRoomRequestDto dto);
 
     RoomListDto getPublicRooms();
+
+    void disconnectFromRoom(String roomName);
 }

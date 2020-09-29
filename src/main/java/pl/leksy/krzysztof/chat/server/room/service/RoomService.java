@@ -88,6 +88,11 @@ public class RoomService implements RoomFacade {
                         .collect(Collectors.toList()));
     }
 
+    @Override
+    public void disconnectFromRoom(String roomName) {
+        roomUsedSlots.computeIfPresent(roomName, (k, v) -> v - 1);
+    }
+
     private String getValidUniqueRoomName(final String originalName) {
         var roomName = originalName;
         if (originalName == null || originalName.isBlank()) {
