@@ -17,13 +17,4 @@ public class MessageController {
         LOGGER.info("Received message: {}", msg);
         return msg;
     }
-
-    // TODO: ogarnąć path
-    @MessageMapping("/chat/chat")
-    @SendTo("/topic/chat")
-    public Message handleMessage2(@Payload Message msg) {
-        LOGGER.info("Received message: {}", msg);
-        return msg;
-    }
-
 }
