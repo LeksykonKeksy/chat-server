@@ -10,10 +10,13 @@ import pl.leksy.krzysztof.chat.server.room.model.Room;
 import pl.leksy.krzysztof.chat.server.room.repository.RoomRepository;
 import pl.leksy.krzysztof.chat.server.web.dto.CreateRoomRequestDto;
 import pl.leksy.krzysztof.chat.server.web.dto.JoinRoomRequestDto;
+import pl.leksy.krzysztof.chat.server.web.dto.RoomListDto;
+import pl.leksy.krzysztof.chat.server.web.dto.RoomListElementDto;
 
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -61,6 +64,20 @@ public class RoomService implements RoomFacade {
         addToRoomSlots(roomName, foundRoom.getSlots());
 
         LOGGER.info("User {} can join to room {}", dto.getNickname(), roomName);
+    }
+
+    @Override
+    public RoomListDto getPublicRooms() {
+        return new RoomListDto()
+                .setRooms(roomRepository.findAll()
+                        .stream()
+                        .filter(r -> !r.isPasswordProtected())
+                        .map(r -> new RoomListElementDto()
+                                .setName(r.getRoomName())
+                                .setCreatedBy(r.getCreator())
+                                .setSlots(r.getSlots())
+                                .setCurrentUsers(roomUsedSlots.get(r.getRoomName())))
+                        .collect(Collectors.toList()));
     }
 
     private String getValidUniqueRoomName(final String originalName) {

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +12,7 @@ import pl.leksy.krzysztof.chat.server.room.service.RoomFacade;
 import pl.leksy.krzysztof.chat.server.web.dto.CreateRoomRequestDto;
 import pl.leksy.krzysztof.chat.server.web.dto.CreateRoomResponseDto;
 import pl.leksy.krzysztof.chat.server.web.dto.JoinRoomRequestDto;
+import pl.leksy.krzysztof.chat.server.web.dto.RoomListDto;
 
 import javax.validation.Valid;
 
@@ -37,5 +39,12 @@ public class RoomController {
 
         roomFacade.joinRoom(dto);
         return HttpStatus.OK;
+    }
+
+    @GetMapping("/list")
+    public RoomListDto listPublicRooms() {
+        LOGGER.info("Getting public room list");
+
+        return roomFacade.getPublicRooms();
     }
 }
