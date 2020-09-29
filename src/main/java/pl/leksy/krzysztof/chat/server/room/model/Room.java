@@ -1,19 +1,14 @@
 package pl.leksy.krzysztof.chat.server.room.model;
 
-import lombok.AccessLevel;
 import lombok.Data;
-import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.time.LocalDateTime;
+import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "room")
+@EntityListeners(AuditingEntityListener.class)
 public class Room {
     @Id
     @Column(name = "room_name", length = 32, nullable = false, unique = true, updatable = false)
@@ -30,8 +25,4 @@ public class Room {
 
     @Column(nullable = false, updatable = false)
     private String creator;
-
-    @CreatedDate
-    @Setter(AccessLevel.NONE)
-    private LocalDateTime createdAt;
 }

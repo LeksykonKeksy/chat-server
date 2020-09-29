@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import pl.leksy.krzysztof.chat.server.room.exceptions.InvalidRoomPasswordException;
 import pl.leksy.krzysztof.chat.server.room.exceptions.RoomFullException;
 import pl.leksy.krzysztof.chat.server.room.exceptions.RoomNotFoundException;
@@ -11,7 +12,7 @@ import pl.leksy.krzysztof.chat.server.web.controller.RoomController;
 
 @Slf4j
 @ControllerAdvice(assignableTypes = RoomController.class)
-public class RoomExceptionHandler {
+public class RoomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RoomNotFoundException.class)
     public HttpStatus handleRoomNotFoundException(Throwable e) {
