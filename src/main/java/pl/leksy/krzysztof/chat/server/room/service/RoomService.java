@@ -13,6 +13,7 @@ import pl.leksy.krzysztof.chat.server.web.dto.JoinRoomRequestDto;
 import pl.leksy.krzysztof.chat.server.web.dto.RoomListDto;
 import pl.leksy.krzysztof.chat.server.web.dto.RoomListElementDto;
 
+import javax.annotation.PostConstruct;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -24,6 +25,12 @@ import java.util.stream.Collectors;
 public class RoomService implements RoomFacade {
     private final RoomRepository roomRepository;
     private final Map<String, Integer> roomUsedSlots = new ConcurrentHashMap<>();
+
+    @PostConstruct
+    public void init() {
+        roomRepository.findAll()
+                .forEach(r -> roomUsedSlots.put(r.getRoomName(), 0));
+    }
 
     @Override
     public String createRoom(CreateRoomRequestDto dto) {
