@@ -1,11 +1,15 @@
 package pl.leksy.krzysztof.chat.server.room.model;
 
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -23,4 +27,11 @@ public class Room {
 
     @Column(updatable = false, length = 60)
     private String password;
+
+    @Column(nullable = false, updatable = false)
+    private String creator;
+
+    @CreatedDate
+    @Setter(AccessLevel.NONE)
+    private LocalDateTime createdAt;
 }
